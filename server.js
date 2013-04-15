@@ -1,6 +1,8 @@
 var http = require("http");
 var url = require("url");
 var connect = require("connect");
+var fs = require('fs');
+var crossDomain = fs.readFileSync(__dirname + "bin-release/crossdomain.xml");
 var peerWaiting = false;
 var waitingPeer = "";
 var res1;
@@ -31,5 +33,8 @@ http.createServer(function(request, response) {
       res1 = response;
       peerWaiting = true;
     }
+  } else if (request.url == "/crossdomain.xml") {
+    res.writeHead(200, {'Content-Type': 'text/xml'});
+    res.end(crossDomain);
   }
 }).listen(55556);
