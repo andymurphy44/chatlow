@@ -260,7 +260,7 @@
 				startPeerVideo();
 				
 				incomingStream = new NetStream(netConnection, id);
-				incomingStream.bufferTime = 0.5;
+				incomingStream.bufferTime = 0.2;
 				incomingStream.addEventListener(NetStatusEvent.NET_STATUS, incomingStreamHandler);
 				incomingStream.play("chatlow-video");
 				
@@ -394,7 +394,7 @@
 				if (mic) {
 					mic.codec = SoundCodec.SPEEX;
 					mic.framesPerPacket = 1;
-					mic.encodeQuality = 7;
+					mic.encodeQuality = 10;
 					mic.setSilenceLevel(0);
 				}
 			}
@@ -407,7 +407,7 @@
 				if (camera)
 				{
 					camera.setMode(320, 240, 15);
-					camera.setQuality(0, 80);
+					camera.setQuality(0, 90);
 				}
 				
 				// when user changes video device, we want to show preview
