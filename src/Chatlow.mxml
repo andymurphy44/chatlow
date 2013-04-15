@@ -280,7 +280,7 @@
 				
 				peerVideo.attachNetStream(incomingStream);
 				
-				clearTextBox();
+				// clearTextBox();
 				currentState = Connected;
 			}
 			
