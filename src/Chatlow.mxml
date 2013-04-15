@@ -155,10 +155,13 @@
 						break;
 					
 					case "NetConnection.Connect.Closed":
-						status("Peer disconnected!");
-						disconnect();
-						findPeer();
-						break;
+					case "NetStream.Connect.Closed":
+					case "NetStream.Play.UnpublishNotify":
+						if (currentState == Connected) {
+							status("Stranger disconnected, finding new stranger...");
+							disconnect();
+							findPeer();
+						}
 					
 					case "NetStream.Connect.Success":
 						// we get this when other party connects to our outgoing stream
@@ -270,16 +273,18 @@
 				peerVideoDisplay.addChild(peerVideo);
 				
 				clearTextBox();
-				status("Connected to stranger!");
+				status("Connected to stranger! " + id);
 				currentState = Connected;
 			}
 			
 			private function incomingStreamHandler(event:NetStatusEvent):void {
 				switch(event.info.code) {
 					case "NetStream.Play.UnpublishNotify":
-						status("Stranger disconnected, finding new stranger...");
-						disconnect();
-						findPeer();
+						if (currentState == Connecting) {
+							status("Stranger disconnected, finding new stranger...");
+							disconnect();
+							findPeer();
+						}
 						break;
 				}
 			}
