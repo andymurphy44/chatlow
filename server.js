@@ -16,12 +16,18 @@ http.createServer(function(request, response) {
     console.log('findPeer request : ' + JSON.stringify(queryData));
     if (peerWaiting) {
       response.write("<id>" + waitingPeer + "</id>");
+      if (queryData.id.indexOf("/") != -1) {
+        queryData.id = queryData.id.substr(0, queryData.id.indexOf('/'));
+      }
       res1.write("<id>" + queryData.id + "</id>");
       res1.end();
       response.end();
       peerWaiting = false;
     } else {
       waitingPeer = queryData.id;
+      if (waitingPeer.indexOf("/") != -1) {
+        waitingPeer = waitingPeer.substr(0, waitingPeer.indexOf('/'));
+      }
       res1 = response;
       peerWaiting = true;
     }
