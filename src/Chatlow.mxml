@@ -18,7 +18,7 @@
 			private const cirrusDeveloperKey:String = "3c3d0d58f149cadee5d85081-5cad0f1df407";
 			
 			// Service URL for exchanging peer ids
-			private const peerServiceUrl:String = "http://http://54.241.28.45:8888";
+			private const peerServiceUrl:String = "http://54.241.28.45:8888";
 			
 			// Service for exchanging peer ids
 			private var peerService:HTTPService = null;
