@@ -160,7 +160,6 @@
 					
 					case "NetConnection.Connect.Closed":
 					case "NetStream.Connect.Closed":
-					case "NetStream.Play.UnpublishNotify":
 						if (currentState == Connected) {
 							currentState = Disconnected;
 							status("Stranger disconnected, finding new stranger...");
@@ -242,16 +241,18 @@
 			private function connectToPeer(id:String):void {
 				if (id.length != 64) {
 					status("There was a problem connecting to the stranger.");
-					currentState = Disconnected;
+					disconnect();
+					findPeer();
 					return;
 				}
 				// caller publishes media stream
 				outgoingStream = new NetStream(netConnection, NetStream.DIRECT_CONNECTIONS);
+				outgoingStream.addEventListener(NetStatusEvent.NET_STATUS, outgoingStreamHandler);
 				outgoingStream.publish("chatlow-video");
 				
 				var o:Object = new Object
 				o.onPeerConnect = function(caller:NetStream):Boolean {
-					status("Found new stranger.");
+					status("Connected to new stranger.");
 					return true;
 				}
 				outgoingStream.client = o;
@@ -260,7 +261,7 @@
 				startPeerVideo();
 				
 				incomingStream = new NetStream(netConnection, id);
-				incomingStream.bufferTime = 0.2;
+				incomingStream.bufferTime = 0.1;
 				incomingStream.addEventListener(NetStatusEvent.NET_STATUS, incomingStreamHandler);
 				incomingStream.play("chatlow-video");
 				
@@ -285,17 +286,13 @@
 			}
 			
 			private function incomingStreamHandler(event:NetStatusEvent):void {
+				// For debugging
 				status(event.info.code);
-				switch(event.info.code) {
-					case "NetStream.Play.UnpublishNotify":
-						if (currentState == Connected) {
-							currentState = Disconnected;
-							status("Stranger disconnected, finding new stranger...");
-							disconnect();
-							findPeer();
-						}
-						break;
-				}
+			}
+			
+			private function outgoingStreamHandler(event:NetStatusEvent):void {
+				// For debugging
+				status(event.info.code);
 			}
 			
 			private function onSendText():void {
