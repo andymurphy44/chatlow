@@ -261,7 +261,7 @@
 				startPeerVideo();
 				
 				incomingStream = new NetStream(netConnection, id);
-				incomingStream.bufferTime = 2;
+				incomingStream.bufferTime = 0.5;
 				incomingStream.addEventListener(NetStatusEvent.NET_STATUS, incomingStreamHandler);
 				incomingStream.play("chatlow-video");
 				
