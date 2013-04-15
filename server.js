@@ -5,23 +5,25 @@ var peerWaiting = false;
 var waitingPeer = "";
 var res1;
 
-connect.createServer(connect.static("bin-debug")).listen(80);
+connect.createServer(connect.static("bin-debug")).listen(8080);
 
 http.createServer(function(request, response) {
-  console.log('New request');
-  console.log("Request URL = " + request.url);
-  response.writeHead(200, {"Content-Type": "text/plain"});
-  var queryData = url.parse(request.url, true).query;
-  console.log('findPeer request : ' + JSON.stringify(queryData));
-  if (peerWaiting) {
-    response.write("<id>" + waitingPeer + "</id>");
-    res1.write("<id>" + queryData.id + "</id>");
-    res1.end();
-    response.end();
-    peerWaiting = false;
-  } else {
-    waitingPeer = queryData.id;
-    res1 = response;
-    peerWaiting = true;
+  if (request.url == "/" || request.url == "") {
+    console.log('New request');
+    console.log("Request URL = " + request.url);
+    response.writeHead(200, {"Content-Type": "text/plain"});
+    var queryData = url.parse(request.url, true).query;
+    console.log('findPeer request : ' + JSON.stringify(queryData));
+    if (peerWaiting) {
+      response.write("<id>" + waitingPeer + "</id>");
+      res1.write("<id>" + queryData.id + "</id>");
+      res1.end();
+      response.end();
+      peerWaiting = false;
+    } else {
+      waitingPeer = queryData.id;
+      res1 = response;
+      peerWaiting = true;
+    }
   }
 }).listen(8888);
