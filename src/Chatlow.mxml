@@ -18,7 +18,7 @@
 			private const cirrusDeveloperKey:String = "3c3d0d58f149cadee5d85081-5cad0f1df407";
 			
 			// Service URL for exchanging peer ids
-			private const peerServiceUrl:String = "http://chatlow.com/findPeer"; //"http://localhost:55556/";
+			private const peerServiceUrl:String = "http://chatlow.com/findPeer/"; //"http://localhost:55556/";
 			
 			// Service for exchanging peer ids
 			private var peerService:HTTPService = null;
