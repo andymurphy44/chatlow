@@ -18,7 +18,7 @@
 			private const cirrusDeveloperKey:String = "3c3d0d58f149cadee5d85081-5cad0f1df407";
 			
 			// Service URL for exchanging peer ids
-			private const peerServiceUrl:String = "http://chatlow.com:8002"; //"http://localhost:8002/";
+			private const peerServiceUrl:String = "http://chatlow.com:55556"; //"http://localhost:55556/";
 			
 			// Service for exchanging peer ids
 			private var peerService:HTTPService = null;
@@ -261,6 +261,7 @@
 				startPeerVideo();
 				
 				incomingStream = new NetStream(netConnection, id);
+				incomingStream.bufferTime = 2;
 				incomingStream.addEventListener(NetStatusEvent.NET_STATUS, incomingStreamHandler);
 				incomingStream.play("chatlow-video");
 				
@@ -394,7 +395,7 @@
 				if (mic) {
 					mic.codec = SoundCodec.SPEEX;
 					mic.framesPerPacket = 1;
-					mic.encodeQuality = 10;
+					mic.encodeQuality = 7;
 					mic.setSilenceLevel(0);
 				}
 			}
@@ -407,7 +408,7 @@
 				if (camera)
 				{
 					camera.setMode(320, 240, 15);
-					camera.setQuality(0, 100);
+					camera.setQuality(0, 80);
 				}
 				
 				// when user changes video device, we want to show preview
