@@ -151,7 +151,7 @@
 			}
 			
 			private function cirrusConnectionHandler(event:NetStatusEvent):void {
-				status(event.info.code);
+				status("(NetConnection) " + event.info.code);
 				switch (event.info.code) {
 					case "NetConnection.Connect.Success":
 						status("Welcome to chatlow!  Press \"Connect\" to get started.");
@@ -287,12 +287,12 @@
 			
 			private function incomingStreamHandler(event:NetStatusEvent):void {
 				// For debugging
-				status(event.info.code);
+				status("(Incoming) " + event.info.code);
 			}
 			
 			private function outgoingStreamHandler(event:NetStatusEvent):void {
 				// For debugging
-				status(event.info.code);
+				status("(Outgoing) " + event.info.code);
 			}
 			
 			private function onSendText():void {
