@@ -1,3 +1,5 @@
+<?xml version="1.0"?> 
+<!-- http://localhost/site/crossdomain.xml --> 
 <cross-domain-policy> 
     <site-control permitted-cross-domain-policies="all"/> 
     <allow-access-from domain="chatlow.com" to-ports="*"/> 
