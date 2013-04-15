@@ -5,7 +5,7 @@ var peerWaiting = false;
 var waitingPeer = "";
 var res1;
 
-connect.createServer(connect.static("bin-debug")).listen(8080);
+connect.createServer(connect.static("bin-debug")).listen(80);
 
 http.createServer(function(request, response) {
   console.log('New request');
