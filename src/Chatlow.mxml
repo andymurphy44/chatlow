@@ -145,6 +145,7 @@
 					netConnection.connect(cirrusUrl, cirrusDeveloperKey);
 				} catch (e:ArgumentError) {
 					status("There was a problem connecting to the server(1)...");
+					disconnect();
 					return;
 				}
 			}
@@ -173,6 +174,7 @@
 					
 					case "NetConnection.Connect.Failed":
 						status("There was a problem connecting to the server(2)...");
+						disconnect();
 						break;
 				}
 			}
@@ -180,6 +182,7 @@
 			private function initPeerService():void {
 				if (peerServiceUrl.length == 0) {
 					status("There was a problem connecting to the server(3)...");
+					disconnect();
 					return;
 				}
 				
@@ -197,12 +200,15 @@
 					connectToPeer(result.id);
 				} else {
 					status("The server is not responding...");
+					disconnect();
 				}
 			}
 			
 			// process error from web service
 			private function handlePeerServiceError(e:FaultEvent):void {
 				status("There was a problem connecting to the server(4)...");
+				status("Error: " + e.toString());
+				disconnect();
 			}
 			
 			private function disconnect():void {
