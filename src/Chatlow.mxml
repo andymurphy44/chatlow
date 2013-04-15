@@ -466,7 +466,7 @@
 							</s:VGroup>
 							<s:VGroup includeIn="Connected" horizontalAlign="right">
 								<s:HGroup>
-									<s:Button label="Next (Ctrl)" click='disconnect(); findPeer()' styleName="buttonStyle"/>
+									<s:Button label="Next (Ctrl)" click='status("You disconnected."); disconnect(); findPeer()' styleName="buttonStyle"/>
 									<s:Button label="Disconnect (Esc)" click='status("You disconnected."); disconnect()' styleName="buttonStyle"/>
 								</s:HGroup>
 							</s:VGroup>
