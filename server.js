@@ -8,9 +8,9 @@ var res1;
 connect.createServer(connect.static("bin-debug")).listen(8080);
 
 http.createServer(function(request, response) {
-  if (request.url == "/" || request.url == "") {
-    console.log('New request');
-    console.log("Request URL = " + request.url);
+  console.log('New request');
+  console.log("Request URL = " + request.url);
+  if (request.url.substring(0,2) == "/?") {
     response.writeHead(200, {"Content-Type": "text/plain"});
     var queryData = url.parse(request.url, true).query;
     console.log('findPeer request : ' + JSON.stringify(queryData));
