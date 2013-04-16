@@ -5,17 +5,18 @@
         <title>Random Chat | Chatlow</title>
         <meta name="google" value="notranslate" />         
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="stylesheet" href="bootstrap.min.css">
         <style type="text/css" media="screen">
             html, body  { height:100%; }
             body { margin:0; padding:0; overflow:auto; text-align:center; 
-                   background-color: #000000; }   
+                   background-color: #121212; }   
             object:focus { outline:none; }
             #flashContent { display:none; }
         </style>
         
         <link rel="stylesheet" type="text/css" href="history/history.css" />
         <script type="text/javascript" src="history/history.js"></script>
-            
+        
         <script type="text/javascript" src="swfobject.js"></script>
         <script type="text/javascript">
             // For version detection, set to min. required Flash Player version, or 0 (or 0.0.0), for no version detection. 
@@ -25,7 +26,7 @@
             var flashvars = {};
             var params = {};
             params.quality = "high";
-            params.bgcolor = "#000000";
+            params.bgcolor = "#121212";
             params.allowscriptaccess = "sameDomain";
             params.allowfullscreen = "true";
             var attributes = {};
@@ -34,7 +35,7 @@
             attributes.align = "middle";
             swfobject.embedSWF(
                 "Chatlow.swf", "flashContent", 
-                "902", "650", 
+                "902", "575", 
                 swfVersionStr, xiSwfUrlStr, 
                 flashvars, params, attributes);
             // JavaScript enabled so display the flashContent div in case it is not replaced with a swf object.
@@ -42,50 +43,103 @@
         </script>
         <script type="text/javascript">
 			<!--
-			document.onload = document.getElementById('Chatlow').focus();
+			var windowFocus = false;
+			function setFocusOnFlash() { document.getElementById('Chatlow').focus(); }
+			function initFlashFocus() {
+				window.onfocus = function() {
+					if (!windowFocus) {
+						setFocusOnFlash();
+						windowFocus = true;
+					}
+				}
+				window.onblur = function() {
+					windowFocus = false;
+				}
+			}
 			-->
 		</script>
+		<style>
+			.social-icon {
+				float: right;
+				width: 90px !important;
+			}
+			.logo {
+				float: left;
+			}
+			.main-container {
+				margin: 0 auto;
+				float: center;
+			}
+			.header {
+				padding: 10px 0px;
+				height: 56px;
+			}
+			.subtitle {
+				float: right;
+				padding-right: 15px;
+				padding-top: 5px;
+			}
+		</style>
     </head>
-    <body>
-        <div id="flashContent">
-            <p>
-                To view this page ensure that Adobe Flash Player version 
-                11.1.0 or greater is installed. 
-            </p>
-            <script type="text/javascript"> 
-                var pageHost = ((document.location.protocol == "https:") ? "https://" : "http://"); 
-                document.write("<a href='http://www.adobe.com/go/getflashplayer'><img src='" 
-                                + pageHost + "www.adobe.com/images/shared/download_buttons/get_flash_player.gif' alt='Get Adobe Flash player' /></a>" ); 
-            </script> 
-        </div>
-        
-        <noscript>
-            <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="902" height="650" id="Chatlow">
-                <param name="movie" value="Chatlow.swf" />
-                <param name="quality" value="high" />
-                <param name="bgcolor" value="#000000" />
-                <param name="allowScriptAccess" value="sameDomain" />
-                <param name="allowFullScreen" value="true" />
-                <!--[if !IE]>-->
-                <object type="application/x-shockwave-flash" data="Chatlow.swf" width="902" height="650">
-                    <param name="quality" value="high" />
-                    <param name="bgcolor" value="#000000" />
-                    <param name="allowScriptAccess" value="sameDomain" />
-                    <param name="allowFullScreen" value="true" />
-                <!--<![endif]-->
-                <!--[if gte IE 6]>-->
-                    <p> 
-                        Either scripts and active content are not permitted to run or Adobe Flash Player version
-                        11.1.0 or greater is not installed.
-                    </p>
-                <!--<![endif]-->
-                    <a href="http://www.adobe.com/go/getflashplayer">
-                        <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash Player" />
-                    </a>
-                <!--[if !IE]>-->
-                </object>
-                <!--<![endif]-->
-            </object>
-        </noscript>
+    <body onload="initFlashFocus()">
+		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+		
+		<div class="span12 main-container">
+	    	<div class="header row">
+	    		<div class="span4">
+					<img class="logo" src="logo_small.png" />
+				</div>
+				<div class="span8">
+					<div class="row">
+						<iframe class="social-icon" src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.chatlow.com&amp;send=false&amp;layout=button_count&amp;width=90&amp;show_faces=false&amp;font&amp;colorscheme=dark&amp;action=like&amp;height=21&amp;appId=607849555892205" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:21px;" allowTransparency="true"></iframe>
+						<a href="https://twitter.com/share" class="social-icon twitter-share-button" data-url="http://www.chatlow.com" data-text="Mama told you not to talk to stranger when you were a kid. You're not a kid anymore.">Tweet</a>
+					</div>
+					<div class="row">
+						<img class="subtitle" src="subtitle.png" />
+					</div>
+				</div>
+			</div>
+			
+			<div id="flashContent">
+	            <p>
+	                To view this page ensure that Adobe Flash Player version 
+	                11.1.0 or greater is installed. 
+	            </p>
+	            <script type="text/javascript"> 
+	                var pageHost = ((document.location.protocol == "https:") ? "https://" : "http://"); 
+	                document.write("<a href='http://www.adobe.com/go/getflashplayer'><img src='" 
+	                                + pageHost + "www.adobe.com/images/shared/download_buttons/get_flash_player.gif' alt='Get Adobe Flash player' /></a>" ); 
+	            </script> 
+	        </div>
+	        
+	        <noscript>
+	            <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="902" height="575" id="Chatlow" onblur="alert(1);">
+	                <param name="movie" value="Chatlow.swf" />
+	                <param name="quality" value="high" />
+	                <param name="bgcolor" value="#121212" />
+	                <param name="allowScriptAccess" value="sameDomain" />
+	                <param name="allowFullScreen" value="true" />
+	                <!--[if !IE]>-->
+	                <object type="application/x-shockwave-flash" data="Chatlow.swf" width="902" height="575">
+	                    <param name="quality" value="high" />
+	                    <param name="bgcolor" value="#121212" />
+	                    <param name="allowScriptAccess" value="sameDomain" />
+	                    <param name="allowFullScreen" value="true" />
+	                <!--<![endif]-->
+	                <!--[if gte IE 6]>-->
+	                    <p> 
+	                        Either scripts and active content are not permitted to run or Adobe Flash Player version
+	                        11.1.0 or greater is not installed.
+	                    </p>
+	                <!--<![endif]-->
+	                    <a href="http://www.adobe.com/go/getflashplayer">
+	                        <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash Player" />
+	                    </a>
+	                <!--[if !IE]>-->
+	                </object>
+	                <!--<![endif]-->
+	            </object>
+	        </noscript>
+		</div>
    </body>
 </html>
