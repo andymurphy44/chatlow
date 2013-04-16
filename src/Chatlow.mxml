@@ -6,6 +6,7 @@
 	<fx:Script>
 		<![CDATA[
 			import flash.external.*;
+			
 			import mx.collections.ArrayList;
 			import mx.rpc.events.FaultEvent;
 			import mx.rpc.events.ResultEvent;
@@ -55,12 +56,23 @@
 			private function init():void {
 				currentState = Disconnected;
 				localSO = SharedObject.getLocal("chatlowSettings");
+				this.addEventListener(KeyboardEvent.KEY_DOWN,keyPressed);
 				initMics();
 				initCams();
 				initSpeakers();
 				initVideo();
 				initPeerService();
 				connectToCirrus();
+			}
+			
+			private function keyPressed(evt:KeyboardEvent):void {
+				if (evt.keyCode == 27 && currentState == Disconnected) {
+					currentState = Connecting;
+					findPeer();
+				} else if (evt.keyCode == 27 && currentState == Connected) {
+					currentState = Disconnected;
+					disconnect();
+				}
 			}
 			
 			private function initMics():void {
@@ -151,7 +163,7 @@
 			}
 			
 			private function cirrusConnectionHandler(event:NetStatusEvent):void {
-				status("(NetConnection) " + event.info.code);
+				// status("(NetConnection) " + event.info.code);
 				switch (event.info.code) {
 					case "NetConnection.Connect.Success":
 						status("Welcome to chatlow!  Press \"Connect\" to get started.");
@@ -261,7 +273,6 @@
 				startPeerVideo();
 				
 				incomingStream = new NetStream(netConnection, id);
-				incomingStream.bufferTime = 0.1;
 				incomingStream.addEventListener(NetStatusEvent.NET_STATUS, incomingStreamHandler);
 				incomingStream.play("chatlow-video");
 				
@@ -281,18 +292,19 @@
 				
 				peerVideo.attachNetStream(incomingStream);
 				
-				// clearTextBox();
+				clearTextBox();
+				focusOnTextInput();
 				currentState = Connected;
 			}
 			
 			private function incomingStreamHandler(event:NetStatusEvent):void {
 				// For debugging
-				status("(Incoming) " + event.info.code);
+				// status("(Incoming) " + event.info.code);
 			}
 			
 			private function outgoingStreamHandler(event:NetStatusEvent):void {
 				// For debugging
-				status("(Outgoing) " + event.info.code);
+				// status("(Outgoing) " + event.info.code);
 			}
 			
 			private function onSendText():void {
@@ -421,6 +433,11 @@
 					status("Cannot write shared object\n");
 				}
 			}
+			
+			private function focusOnTextInput():void {
+				textInput.setFocus();
+				textInput.selectRange(textInput.text.length, textInput.text.length);
+			}
 		]]>
 	</fx:Script>
 	
@@ -458,16 +475,14 @@
 					<s:VGroup>
 						<s:HGroup>
 							<s:VGroup includeIn="Disconnected" horizontalAlign="right">
-								<s:Button x="-17" label="Connect (Ctrl)"
-										  click="findPeer()" styleName="buttonStyle"/>
+								<s:Button x="-17" label="Connect (Esc)" click="findPeer()" styleName="buttonStyle"/>
 							</s:VGroup>
 							<s:VGroup includeIn="Connecting" horizontalAlign="right">
 								<s:Label text="Connecting..." color="0xffffff"/>
 							</s:VGroup>
 							<s:VGroup includeIn="Connected" horizontalAlign="right">
 								<s:HGroup>
-									<s:Button label="Next (Ctrl)" click='status("You disconnected."); disconnect(); findPeer()' styleName="buttonStyle"/>
-									<s:Button label="Disconnect (Esc)" click='status("You disconnected."); disconnect()' styleName="buttonStyle"/>
+									<s:Button label="Disconnect (Esc)" click='status("You disconnected."); disconnect();' styleName="buttonStyle"/>
 								</s:HGroup>
 							</s:VGroup>
 						</s:HGroup>
