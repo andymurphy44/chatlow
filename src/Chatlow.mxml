@@ -130,11 +130,9 @@
 			private function initSpeakers():void {
 				// speaker volume
 				var speakerVolume:Number = 80;
-				if (localSO.data.hasOwnProperty("speakerVolume"))
-				{
+				if (localSO.data.hasOwnProperty("speakerVolume")) {
 					speakerVolume = localSO.data.speakerVolume;
 				}
-				
 				speakerVolumeSlider.value = speakerVolume;
 			}
 			
@@ -148,8 +146,6 @@
 			}
 			
 			private function connectToCirrus():void {
-				clearTextBox();
-				
 				netConnection = new NetConnection();
 				netConnection.addEventListener(NetStatusEvent.NET_STATUS, cirrusConnectionHandler);
 				
@@ -339,6 +335,8 @@
 				var camera:Camera = Camera.getCamera(cameraIndex.toString());
 				if (camera) {
 					localVideoDisplay.attachCamera(camera);
+					camera.addEventListener(ActivityEvent.ACTIVITY, cameraActivityHandler);
+					camera.addEventListener(StatusEvent.STATUS, cameraStatusHandler);
 				}
 				
 				peerVideo = new Video();
@@ -413,8 +411,7 @@
 				
 				var camera:Camera = Camera.getCamera(cameraIndex.toString());
 				
-				if (camera)
-				{
+				if (camera) {
 					camera.setMode(320, 240, 15);
 					camera.setQuality(0, 90);
 				}
@@ -432,6 +429,15 @@
 				} catch (e:Error) {
 					status("Cannot write shared object\n");
 				}
+			}
+			
+			private function cameraStatusHandler(evt:StatusEvent):void {
+				connectButton.setFocus();
+				
+			}
+			
+			private function cameraActivityHandler(evt:ActivityEvent):void {
+				connectButton.setFocus();
 			}
 			
 			private function focusOnTextInput():void {
@@ -475,7 +481,7 @@
 					<s:VGroup>
 						<s:HGroup>
 							<s:VGroup includeIn="Disconnected" horizontalAlign="right">
-								<s:Button x="-17" label="Connect (Esc)" click="findPeer()" styleName="buttonStyle"/>
+								<s:Button id="connectButton" x="-17" label="Connect (Esc)" click="findPeer()" styleName="buttonStyle"/>
 							</s:VGroup>
 							<s:VGroup includeIn="Connecting" horizontalAlign="right">
 								<s:Label text="Connecting..." color="0xffffff"/>
